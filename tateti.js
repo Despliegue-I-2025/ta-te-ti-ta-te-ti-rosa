@@ -1,3 +1,71 @@
+let marcas = { cruz: 1, circulo: 2, vacio: 0 };
+let simbolo = 0;
+
+const winningCombos = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+];
+
+// ================== IA ==================
+function iaMove(board) {
+    const X = marcas.cruz;
+    const O = marcas.circulo;
+
+    // 1. Gana si puede
+    const win = findWinningMove(board, O);
+    if (win !== null) return win;
+
+    // 2. Bloquea al humano
+    const block = findWinningMove(board, X);
+    if (block !== null) return block;
+
+    // 3. Estrategia defensiva
+    if (board[4] === 0) return 4;
+    const corners = [0, 2, 6, 8].filter(i => board[i] === 0);
+    if (corners.length > 0) return corners[Math.floor(Math.random() * corners.length)];
+    const edges = [1, 3, 5, 7].filter(i => board[i] === 0);
+    if (edges.length > 0) return edges[Math.floor(Math.random() * edges.length)];
+
+    return board.findIndex(v => v === 0);
+}
+
+function findWinningMove(board, player) {
+    for (const [a, b, c] of winningCombos) {
+        const line = [board[a], board[b], board[c]];
+        if (line.filter(v => v === player).length === 2 && line.includes(0)) {
+            if (board[a] === 0) return a;
+            if (board[b] === 0) return b;
+            if (board[c] === 0) return c;
+        }
+    }
+    return null;
+}
+
+// ================== UTILIDADES ==================
+function determinarRol(board) {
+    for (let i = 0; i < 9; i++) {
+        if (board[i] === marcas.cruz) {
+            return marcas.circulo;
+        }
+    }
+    // No encontró nada, así que debe ser cruz.
+    return marcas.cruz;
+}
+
+function checkWinner(board) {
+    for (const [a, b, c] of winningCombos) {
+        if (board[a] !== 0 && board[a] === board[b] && board[b] === board[c]) {
+            return board[a]; // Devuelve 1 (cruz) o 2 (círculo)
+        }
+    }
+    if (!board.includes(0)) {
+        return "empate";
+    }
+    return null; // No hay ganador aún
+}
+
+// ================== SERVIDOR ==================
 const express = require('express');
 const app = express();
 const PORT = 3000;
@@ -14,20 +82,34 @@ app.get('/move', (req, res) => {
     if (!Array.isArray(board) || board.length !== 9) {
         return res.status(400).json({ error: 'El tablero debe ser un array de 9 posiciones.' });
     }
-    // Buscar posiciones vacías (asumiendo que 0 es vacío)
+
+    // Chequear si ya hay ganador antes de mover
+    const ganador = checkWinner(board);
+    if (ganador) {
+        return res.json({ resultado: ganador });
+    }
+
+    // Asignar rol de IA
+    if (simbolo === 0) {
+        simbolo = determinarRol(board);
+    }
+
+    // Buscar posiciones vacías
     const emptyPositions = board
         .map((v, i) => v === 0 ? i : null)
         .filter(i => i !== null);
-    
+
     if (emptyPositions.length === 0) {
         return res.status(400).json({ error: 'No hay movimientos disponibles.' });
     }
-    
-    // Elegir una posición vacía al azar
-    const move = emptyPositions[Math.floor(Math.random() * emptyPositions.length)];
-    res.json({ movimiento: move });
+
+    // Movimiento de la IA
+    const movimientoIA = iaMove(board);
+    board[movimientoIA] = simbolo;
+
+    res.json({ movimiento: movimientoIA, tablero: board });
 });
 
 app.listen(PORT, () => {
-    console.log(`Servidor de tateti escuchando en el puerto ${PORT}`);
+    console.log(`Servidor de tateti escuchando en el puerto ${PORT}`);
 });
