@@ -68,7 +68,7 @@ function checkWinner(board) {
 // ================== SERVIDOR ==================
 const express = require('express');
 const app = express();
-const PORT = 3000;
+const PORT = 3002;
 
 // GET /move?board=[0,1,0,2,0,0,0,0,0]
 app.get('/move', (req, res) => {
