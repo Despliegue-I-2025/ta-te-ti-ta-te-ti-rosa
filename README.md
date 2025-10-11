@@ -21,7 +21,7 @@ IA inteligente que usa el algoritmo Minimax con poda Alpha-Beta
 
 API REST simple - solo envía el estado del tablero y recibe el movimiento
 
- ¿Cómo usarlo?
+# ¿Cómo usarlo?
 1. Iniciar el servidor
 bash
 npm start
@@ -82,13 +82,18 @@ Jest - Framework de testing
 
 Algoritmos de juego - Minimax + Alpha-Beta
 
- Estructura del proyecto
+
+ ## Estructura del proyecto
 text
 tateti-5x5/
 ├── tateti-5x5.js     # Servidor principal + IA
 ├── tateti.test.js    # Tests
 ├── package.json      # Configuración
 └── README.md         # Este archivo
+
+
+
+
 
 # Proyecto: TA-TE-TI 3x3 
 
