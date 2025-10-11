@@ -31,17 +31,26 @@ El servidor estará disponible en: http://localhost:3002
 bash
 # Ejemplo: tablero vacío
 curl "http://localhost:3002/move?board=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]"
+
+
+
 3. La respuesta
 json
 {
   "movimiento": 12,
   "tablero": [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0]
 }
- API
+
+ 
+ # API
+
 Endpoint: GET /move
 Parámetro:
 
-board: Array JSON de 25 números (0=vacío, 1=X, 2=O)
+
+
+# board: Array JSON de 25 números (0=vacío, 1=X, 2=O)
+
 
 Respuesta:
 
@@ -49,7 +58,11 @@ movimiento: Índice donde la IA jugó (0-24)
 
 tablero: Estado actualizado del tablero
 
- La IA
+
+ 
+ 
+# La IA
+
 La inteligencia artificial incluye:
 
 Detección de amenazas: Bloquea jugadas ganadoras del oponente
@@ -60,12 +73,13 @@ Poda Alpha-Beta: Optimiza el análisis para mayor profundidad
 
 Heurística inteligente: Evalúa posiciones estratégicas
 
- Tests
-Ejecutar las pruebas:
 
-bash
+ # Tests
+Ejecutar las pruebas:
 npm test
-Los tests verifican:
+
+
+# Los tests verifican:
 
  Generación de combinaciones ganadoras
 
@@ -75,7 +89,8 @@ Los tests verifican:
 
  Funcionamiento del API
 
- Tecnologías
+ # Tecnologías
+
 Node.js + Express - Servidor web
 
 Jest - Framework de testing
