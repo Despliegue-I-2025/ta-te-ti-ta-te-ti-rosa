@@ -84,8 +84,10 @@ Algoritmos de juego - Minimax + Alpha-Beta
 
 
  ## Estructura del proyecto
-text
-tateti-5x5/
+
+-test
+-tateti-5x5/
+
 ├── tateti-5x5.js     # Servidor principal + IA
 ├── tateti.test.js    # Tests
 ├── package.json      # Configuración
