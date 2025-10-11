@@ -1,5 +1,92 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Uc_kVv2r)
+Proyecto: TA-TE-TI 5X5
 
+*Participantes:* Ariadna Santillan, Roman Acuña, Oriana Moyano, Santiago Marranti  
+*Profesor:* Christian Di Guardia  
+
+
+
+Un servidor de Tateti (Cuatro en Línea) 5x5 con Inteligencia Artificial implementado en Node.js.
+  ¿Qué hace este proyecto?
+Este proyecto es un servidor web que responde a peticiones HTTP con movimientos de IA para el juego Tateti en un tablero 5x5.
+
+Características principales:
+Tablero 5x5 (25 posiciones)
+
+4 en línea para ganar (en lugar de 3 tradicional)
+
+IA inteligente que usa el algoritmo Minimax con poda Alpha-Beta
+
+API REST simple - solo envía el estado del tablero y recibe el movimiento
+
+ ¿Cómo usarlo?
+1. Iniciar el servidor
+bash
+npm start
+El servidor estará disponible en: http://localhost:3002
+
+2. Hacer una petición
+bash
+# Ejemplo: tablero vacío
+curl "http://localhost:3002/move?board=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]"
+3. La respuesta
+json
+{
+  "movimiento": 12,
+  "tablero": [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0]
+}
+ API
+Endpoint: GET /move
+Parámetro:
+
+board: Array JSON de 25 números (0=vacío, 1=X, 2=O)
+
+Respuesta:
+
+movimiento: Índice donde la IA jugó (0-24)
+
+tablero: Estado actualizado del tablero
+
+ La IA
+La inteligencia artificial incluye:
+
+Detección de amenazas: Bloquea jugadas ganadoras del oponente
+
+Búsqueda Minimax: Analiza múltiples movimientos futuros
+
+Poda Alpha-Beta: Optimiza el análisis para mayor profundidad
+
+Heurística inteligente: Evalúa posiciones estratégicas
+
+ Tests
+Ejecutar las pruebas:
+
+bash
+npm test
+Los tests verifican:
+
+ Generación de combinaciones ganadoras
+
+ Detección de ganadores
+
+ Lógica de la IA
+
+ Funcionamiento del API
+
+ Tecnologías
+Node.js + Express - Servidor web
+
+Jest - Framework de testing
+
+Algoritmos de juego - Minimax + Alpha-Beta
+
+ Estructura del proyecto
+text
+tateti-5x5/
+├── tateti-5x5.js     # Servidor principal + IA
+├── tateti.test.js    # Tests
+├── package.json      # Configuración
+└── README.md         # Este archivo
 
 # Proyecto: TA-TE-TI 3x3 
 
